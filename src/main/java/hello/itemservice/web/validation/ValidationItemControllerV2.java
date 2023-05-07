@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.hasText;
+import static org.springframework.validation.ValidationUtils.rejectIfEmptyOrWhitespace;
 
 @Slf4j
 @Controller
@@ -161,6 +162,8 @@ public class ValidationItemControllerV2 {
 
         log.info("objectName={}", bindingResult.getObjectName());
         log.info("target={}", bindingResult.getTarget());
+
+        rejectIfEmptyOrWhitespace(bindingResult, "itemName", "required");
 
         if (!hasText(item.getItemName())) {
             bindingResult.rejectValue("itemName", "required");
